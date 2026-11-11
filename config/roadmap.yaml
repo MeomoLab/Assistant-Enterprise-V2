@@ -1,0 +1,12 @@
+- {id: eligibility, title: Check your eligibility, detail: Complete the indicative pre-check., link: /eligibility}
+- {id: profile, title: Tell us about you and your idea, detail: Add a short business profile., link: /profile}
+- {id: intreo, title: Meet your Intreo Employment Personal Adviser, detail: Initial assessment and referral., link: /roadmap}
+- {id: syob, title: Do the Start Your Own Business course, detail: Record your completion date., link: /roadmap}
+- {id: market, title: Research your market and competitors, detail: Add at least two competitors and explain what makes your business different., link: /research}
+- {id: food, title: Work through the food rules, detail: Keep food-safety and product-claim tasks together., link: /food}
+- {id: numbers, title: Work out your numbers, detail: Check product costs, capacity and projections., link: /numbers}
+- {id: risks, title: Review your risk flags, detail: Work through the items that need attention., link: /risks}
+- {id: ldc, title: Build your business plan with your LDC Enterprise Officer, detail: Record your meeting., link: /roadmap}
+- {id: pack, title: LDC recommendation and application pack, detail: Prepare the items with your Enterprise Officer., link: /pack}
+- {id: decision, title: Intreo recommendation and decision, detail: The Deciding Officer makes the final decision., link: /roadmap}
+- {id: trading, title: "If approved: prepare to start trading", detail: "Only after approval; ask your adviser about timing.", link: /roadmap}

@@ -1,0 +1,44 @@
+btwea:
+  source_url: https://www.gov.ie/en/department-of-social-protection/publications/operational-guidelines-back-to-work-enterprise-allowance/
+  source_note: "DSP Operational Guidelines: BTWEA, page last updated 23 September 2025"
+  last_verified: "2026-11-10"
+  status: verified
+  allowance: {basis: primary social welfare payment, year_1_pct: 100, year_2_pct: 75, max_paid_days: 624}
+  qualifying:
+    minimum_paid_days: 234
+    paid_days_per_week: 6
+    casual_paid_days: 312
+    casual_max_insurable_days: 30
+    min_age: 18
+    min_age_status: unverified
+    max_age: 65
+    years_between_claims: 5
+    payment_options:
+      - {id: ja, label: "Jobseeker's Allowance (JA)", rule: standard}
+      - {id: casual, label: "Casual Jobseeker's Allowance or Benefit", rule: unsure, note: "Special rule: 312 paid days with at most 30 days' insurable work. Discuss with Intreo."}
+      - {id: jb_jprb, label: "Jobseeker's Benefit or Jobseeker's Pay-Related Benefit", rule: not_eligible, note: "Not entitled to BTWEA. You may be entitled to the Short-Term Enterprise Allowance (STEA)."}
+      - {id: other_listed, label: "Another payment on the official list of qualifying payments", rule: standard_with_note, help: "The list includes One-Parent Family Payment, Jobseeker's Transitional Payment, Disability Allowance, Illness Benefit, Carer's Allowance, Farm Assist, Blind Pension, Invalidity Pension and some others. You do not need to say which one. This help text is shown on screen and never stored.", note: "Some of these payments have extra conditions. For example, Illness Benefit needs 3 of the last 5 years on qualifying payments (not 234 paid days), Carer's Allowance means you must stop caring, and Farm Assist means the new business cannot be the farm holding. Check with Intreo."}
+      - {id: not_listed, label: "Another payment (not listed)", rule: unsure}
+  process:
+    start_within_weeks_of_approval: 12
+    review_request_days: 21
+    market_research_max_months: 3
+    review_months: [3, 9]
+    documents_with_recommendation:
+      - Completed application form BTW 2
+      - One-year financial projection
+      - "Full business plan, including confirmation of business structure"
+      - "Confirmation that you completed a Start Your Own Business (SYOB) course"
+  esg_max_euro: 2500
+food_notification_lead_days: 28
+food_notification_status: unverified
+food_notification_source_note: "Owner's notes; confirm before use"
+ldc_guidance:
+  status: guidance
+  source_note: "As attested by the project owner; not DSP guideline thresholds"
+  last_verified: "2026-11-10"
+  min_net_margin_pct: 20
+  max_consecutive_negative_cash_months: 3
+  min_distinct_local_competitors: 2
+  max_weekly_production_hours_alone: 40
+stale_after_days: 365

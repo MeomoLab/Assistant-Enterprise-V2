@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-intro"><div class="eyebrow">A PRACTICAL REVIEW</div><h1>Risk flags</h1><p class="lede">Flags help you spot areas to discuss or strengthen. They are not a prediction of approval.</p></div>
+<div class="risk-summary"><span>Indicative only</span><b>{{ flags|selectattr('severity','equalto','Red')|list|length }} red · {{ flags|selectattr('severity','equalto','Amber')|list|length }} amber</b><p>Thresholds labelled LDC guidance are rules of thumb from the spec, not DSP requirements.</p></div>
+<form method="post" class="risk-list"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+{% for flag in flags %}<article class="risk-card {{ flag.severity|lower|replace(' / info','') }}"><div class="risk-mark">{% if flag.severity=='Red' %}!{% elif flag.severity=='Amber' %}△{% else %}i{% endif %}</div><div><span class="status-word">{{ flag.severity }}</span><h2>{{ flag.title }}</h2><p>{{ flag.why }}</p>{% if flag.title=='Already started trading' %}<p class="step-warning">{{ warning }}</p>{% endif %}<div class="fix"><b>Possible next step</b><p>{{ flag.fix }}</p></div>{% if flag.severity=='Red' %}<label class="acknowledge"><input type="checkbox" name="acknowledged" value="{{ flag.id }}" {% if flag.id in acknowledged %}checked{% endif %}><span>I have reviewed this flag. It will remain visible while I work on it.</span></label>{% endif %}</div></article>{% else %}<div class="empty-card"><span>✳</span><h2>No flags right now</h2><p>As you add details, we’ll update this view.</p></div>{% endfor %}
+<button class="button primary">Save risk review</button></form>
+{% endblock %}

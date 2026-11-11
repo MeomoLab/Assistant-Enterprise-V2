@@ -1,0 +1,6 @@
+title: "HSE food premises notification helper"
+source_note: "Field labels and the 28-day reminder are unverified."
+last_verified: "2026-11-10"
+status: unverified
+link: hse_food
+fields: [Business name, Food product, Town and county]

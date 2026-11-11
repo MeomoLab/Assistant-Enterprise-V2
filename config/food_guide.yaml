@@ -1,0 +1,5 @@
+- {id: hse, title: Notify the HSE about your food premises, help: Check with your adviser or LDC when to submit. The 28-day reminder is unverified., link: hse_food, status: unverified}
+- {id: haccp, title: Write a HACCP food safety plan, help: HACCP is a practical system for identifying and controlling food-safety risks., link: btwea_guidelines, status: guidance}
+- {id: allergens, title: Allergen information and labelling, help: Check the rules for the 14 regulated allergens., link: btwea_guidelines, status: guidance}
+- {id: claims, title: Check product claims such as organic, gluten-free and vegan, help: Certification and legal standards may apply to product claims., link: btwea_guidelines, status: guidance}
+- {id: insurance, title: Explore product liability and other insurance, help: Ask an appropriate adviser what cover your business needs., link: btwea_guidelines, status: guidance}

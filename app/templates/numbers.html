@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-intro"><div class="eyebrow">COSTS, CAPACITY & CASH FLOW</div><h1>Your numbers</h1><p class="lede">Change an ingredient cost once and see its effect across the business picture.</p></div>
+<form method="post" class="stack"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="card">
+    <div class="section-heading compact"><div><h2>Product studio</h2><p>Recipe quantities and ingredient prices are for one batch.</p></div><span class="badge guidance">Illustrative prices</span></div>
+    <div class="form-grid">
+      <label class="span-2">Product name<input name="product_name" value="{{ data.product.get('name','') }}"></label>
+      <label>Units per batch<input name="batch_size" type="number" min="1" step="1" value="{{ data.product.get('batch_size',1) }}"></label>
+      <label>Wastage (%)<input name="wastage_pct" type="number" min="0" max="100" step="0.1" value="{{ data.product.get('wastage_pct',0) }}"></label>
+      <label>Labour minutes per batch<input name="labour_minutes" type="number" min="0" step="1" value="{{ data.product.get('labour_minutes',0) }}"></label>
+      <label>Hourly labour rate (€)<input name="hourly_rate" type="number" min="0" step="0.01" value="{{ data.product.get('hourly_rate',0) }}"></label>
+      <label>Overhead per unit (€)<input name="overhead" type="number" min="0" step="0.01" value="{{ data.product.get('overhead',0) }}"></label>
+      <label>Wholesale price per unit (€)<input name="wholesale" type="number" min="0" step="0.01" value="{{ data.product.get('wholesale',0) }}"></label>
+      <label>Direct retail price per unit (€)<input name="retail" type="number" min="0" step="0.01" value="{{ data.product.get('retail',0) }}"></label>
+    </div>
+    <h3 class="subhead">Ingredients and packaging</h3>
+    <div class="ingredient-list">
+      {% for line in data.product.get('recipe',[]) %}<div class="form-grid ingredient-line"><label>Ingredient<input name="ingredient_name" value="{{ line.name }}"></label><label>Price per unit (€)<input name="ingredient_price" type="number" min="0" step="0.01" value="{{ line.price }}"></label><label>Quantity per batch<input name="ingredient_qty" type="number" min="0" step="0.01" value="{{ line.quantity }}"></label></div>{% endfor %}
+      {% for i in range(4-data.product.get('recipe',[])|length if data.product.get('recipe',[])|length < 4 else 0) %}<div class="form-grid ingredient-line"><label>Ingredient<input name="ingredient_name"></label><label>Price per unit (€)<input name="ingredient_price" type="number" min="0" step="0.01"></label><label>Quantity per batch<input name="ingredient_qty" type="number" min="0" step="0.01"></label></div>{% endfor %}
+    </div>
+    <div class="result-strip"><div><span>Estimated cost per unit</span><b>€{{ '%.4f'|format(cost.unit_cost) }}</b></div><div><span>Wholesale margin</span><b>€{{ '%.2f'|format(cost.wholesale_margin) }} · {{ '%.1f'|format(cost.wholesale_margin_pct) }}%</b></div><div><span>Direct retail margin</span><b>€{{ '%.2f'|format(cost.retail_margin) }} · {{ '%.1f'|format(cost.retail_margin_pct) }}%</b></div><div><span>Price for 20% margin</span><b>€{{ '%.2f'|format(cost.unit_cost / .8) }}</b><small>LDC guidance</small></div></div>
+  </div>
+  <div class="card">
+    <div class="section-heading compact"><div><h2>Production capacity</h2><p>Capacity includes batch and set-up time. Review whether the weekly plan is manageable.</p></div></div>
+    <div class="form-grid">{% for key,label in [('days','Production days per week'),('hours','Hours per day'),('batch_hours','Hours to make a batch'),('setup_hours','Set-up and cleaning hours per batch'),('help_hours','Paid help hours per week')] %}<label>{{ label }}<input name="{{ key }}" type="number" min="0" step="0.1" value="{{ data.capacity.get(key,0) }}"></label>{% endfor %}</div>
+    <div class="result-strip"><div><span>Maximum per week</span><b>{{ cap.weekly_units }} units</b></div><div><span>Maximum per month</span><b>{{ cap.monthly_units }} units</b></div><div><span>Planned production hours</span><b>{{ '%.1f'|format(cap.weekly_hours) }} h/week</b></div></div>
+  </div>
+  <div class="card">
+    <div class="section-heading compact"><div><h2>24-month projection</h2><p>The allowance is shown in your personal block. It is never business turnover.</p></div><span class="badge amber">Indicative only</span></div>
+    <p class="caption">In the demo workspace, the weekly payment is an illustrative demo value, not a real payment rate. Replace it with your own figure.</p>
+    <div class="form-grid">{% for key,label in [('fixed_cost','Monthly fixed costs (€)'),('units_month','Units sold in month 1'),('wholesale_mix','Wholesale sales mix (%)'),('weekly_payment','Previous weekly payment (€)'),('drawings','Personal living costs per month (€)'),('growth_pct','Sales growth every 3 months (%)'),('sales_down_pct','Worse-case sales reduction (%)'),('ingredient_up_pct','Worse-case ingredient cost increase (%)')] %}<label>{{ label }}<input name="{{ key }}" type="number" min="0" step="0.01" value="{{ data.projection.get(key,30 if key=='sales_down_pct' else 10 if key=='ingredient_up_pct' else 0) }}"></label>{% endfor %}</div>
+    <div class="result-strip"><div><span>Year 1 margin</span><b>{{ '%.1f'|format(margin_1) }}%</b></div><div><span>Year 2 margin</span><b>{{ '%.1f'|format(margin_2) }}%</b></div><div><span>First break-even month</span><b>{{ break_even or 'Not in 24 months' }}</b></div><div><span>Worse-case negative-month streak</span><b>{{ worst_streak }} months</b></div></div>
+    <div class="table-scroll"><table><thead><tr><th>Month</th><th>Base turnover</th><th>Base net cash flow</th><th>Worse-case net</th><th>Personal allowance†</th><th>Drawings</th></tr></thead><tbody>{% for row in rows %}<tr><td>{{ row.month }}</td><td>€{{ '%.0f'|format(row.base.turnover) }}</td><td>€{{ '%.0f'|format(row.base.net) }}</td><td>€{{ '%.0f'|format(row.worse.net) }}</td><td>€{{ '%.0f'|format(row.base.allowance) }}</td><td>€{{ '%.0f'|format(row.base.drawings) }}</td></tr>{% endfor %}</tbody></table></div>
+    <p class="caption">† The allowance is in the personal block, never business income. Month 24 business cash flow: €{{ '%.2f'|format(rows[23].base.net) }} against drawings of €{{ '%.2f'|format(rows[23].base.drawings) }}. Low-sales months in Year 1: {{ low_sales }}. Indicative only.</p>
+  </div>
+  <button class="button primary">Save all number inputs</button>
+</form>
+{% endblock %}

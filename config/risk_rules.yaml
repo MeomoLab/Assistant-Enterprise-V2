@@ -1,0 +1,12 @@
+source_note: "Rules of thumb supplied for this proof of concept"
+last_verified: "2026-11-10"
+status: guidance
+rules:
+  - {id: margin_year_two, severity: Red, title: "Year 2 net margin at or below 20%", fix: "Review costs, products and customer prices using evidence."}
+  - {id: negative_streak, severity: Red, title: "More than three negative months in a row", fix: "Review the monthly sales ramp and costs."}
+  - {id: month_24, severity: Red, title: "Month 24 cash flow cannot cover drawings", fix: "Review drawings and the business model's longer-term viability."}
+  - {id: capacity, severity: Amber, title: "Planned sales above capacity", fix: "Review production time and realistic weekly output."}
+  - {id: production_hours, severity: Red, title: "Over 40 production hours a week working alone", fix: "Review the weekly plan or whether paid help is realistic."}
+  - {id: competitors, severity: Red, title: "Fewer than two competitors listed", fix: "Add local competitors and public prices."}
+  - {id: difference, severity: Red, title: "No written business difference", fix: "Describe the value customers will see and how it differs."}
+  - {id: started_trading, severity: Red, title: "Already started trading", fix: "Discuss the circumstances with your Intreo adviser or LDC."}

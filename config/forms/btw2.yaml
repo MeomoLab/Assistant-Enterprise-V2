@@ -1,0 +1,6 @@
+title: "Form BTW 2 helper"
+source_note: "Field labels have not been checked against the current form."
+last_verified: "2026-11-10"
+status: unverified
+link: btwea_guidelines
+fields: [Business name, Business idea, Business structure, Town and county]
